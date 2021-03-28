@@ -1,0 +1,11 @@
+vars:
+aws_key: "Main"
+sg: "webserver"
+sg_id: "sg-002b34dffb1e5a662"
+ami_redhat: "ami-0a9d27a9f4f5c0efc"
+ami_ubuntu: "ami-0b84c6433cdbe5c3e"
+vpc: "subnet-abc2cbc3"
+region: "ap-south-1"
+count: 1
+instance_name_redhat: "RedHat"
+instance_name_ubuntu: "Ubuntu"

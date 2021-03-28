@@ -1,0 +1,43 @@
+- hosts: tag_Name_RedHat
+  remote_user: "ec2-user"
+  vars_files:
+       - "{{ ansible_facts['distribution'] }}.yml"
+ 
+  tasks:
+  - name: Installing Redhat Apache httpd
+    package:
+       name: "{{ r_package }}"
+       state: present
+ 
+  - name: Uploading webpages
+    template:
+       src: "index.html.j2"
+       dest: "/var/www/html/index.html"
+       
+  - name: Starting httpd services
+    service:
+       name: "{{ r_service }}"
+       state: started 
+
+- hosts: tag_Name_Ubuntu
+  remote_user: "ubuntu"
+  vars_files:
+       - "{{ ansible_facts['distribution'] }}.yml"
+  tasks:       
+  - name: Installing Ubuntu Apache httpd
+    package:
+       name: "{{ u_package }}"
+       state: present
+
+  - name: Uploading webpages
+    template:
+       src: "index.html.j2"
+       dest: "/var/www/html/index.html"
+
+  - name: Starting httpd services
+    service:
+       name: "{{ u_service }}"
+       state: started
+
+
+

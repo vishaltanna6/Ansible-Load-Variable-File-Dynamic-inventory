@@ -1,0 +1,45 @@
+- hosts: localhost
+  vars_files:
+      - secret.yml
+      - vars_aws.yml
+  tasks:
+  - pip:
+      name: boto 
+  - amazon.aws.ec2:
+      key_name: "{{ aws_key }}"
+      group: "{{ sg }}"
+      group_id: "{{ sg_id }}"
+      instance_type: t2.micro
+      image: "{{ ami_redhat }}"
+      vpc_subnet_id:  "{{ vpc }}"
+      aws_access_key: "{{ access_key }}"
+      aws_secret_key: "{{ secret_key }}"
+      region: "{{ region }}"        
+      wait: yes
+      count: "{{ count }}"
+      instance_tags:
+        Name: "{{ instance_name_redhat }}"
+        Ansible: "ec2"
+      assign_public_ip: yes
+  - pause:
+      minutes: 1
+
+  - amazon.aws.ec2:
+      key_name: "{{ aws_key }}"
+      group: "{{ sg }}"
+      group_id: "{{ sg_id }}"
+      instance_type: t2.micro
+      image: "{{ ami_ubuntu }}"
+      vpc_subnet_id:  "{{ vpc }}"
+      aws_access_key: "{{ access_key }}"
+      aws_secret_key: "{{ secret_key }}"
+      region: "{{ region }}"
+      wait: yes
+      count: "{{ count }}"
+      instance_tags:
+        Name: "{{ instance_name_ubuntu }}"
+        Ansible: "ec2"
+      assign_public_ip: yes
+  - pause:
+      minutes: 1
+    
